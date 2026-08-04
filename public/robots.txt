@@ -1,0 +1,12 @@
+# Global Directives applied uniformly to all search engine crawlers
+User-agent: *
+Allow: /
+Allow: /shop
+Allow: /product/
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /orders/
+
+# Target parameters mapping your clean XML directory node data
+Sitemap: https://shopbyfbo.vercel.app/sitemap.xml

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Structural Layout Nodes -->
+  <url>
+    <loc>https://shopbyfbo.vercel.app/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://shopbyfbo.vercel.app/shop</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://shopbyfbo.vercel.app/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shopbyfbo.vercel.app/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://vercel.app</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://shopbyfbo.vercel.app/terms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Clean Individual Product Canonical Nodes -->
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_7fec06b501d5</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_a23312884c01</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_85a823e10a99</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_3552874b4c6a</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_efef2d79b7ac</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_5a4b320f012d</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_89fa3fce8563</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_41d8dd42cbe2</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_d0413b0e8309</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_392618d1e44d</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_eae0ee405085</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_7b6d2f5eda8e</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_d6f8cfed2f82</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_ab952a634a38</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_90f330935529</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://shopbyfbo.vercel.app/product/prod_deae5e5b6c46</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+</urlset>

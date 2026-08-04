@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Forever palette → HSL */
+    --background: 60 6% 98%;              /* #FAFAFA */
+    --foreground: 80 6% 11%;              /* #1C1E1A */
+    --card: 0 0% 100%;
+    --card-foreground: 80 6% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 80 6% 11%;
+    --primary: 150 45% 21%;               /* #1E4E37 Deep Aloe */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 150 45% 15%;
+    --secondary: 42 85% 45%;              /* #D49F11 Honey Gold */
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 42 85% 37%;
+    --muted: 84 10% 95%;                  /* soft stone */
+    --muted-foreground: 96 8% 37%;        /* #5C6656 */
+    --accent: 84 10% 95%;
+    --accent-foreground: 150 45% 21%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 84 8% 88%;                  /* #D1D5CB */
+    --input: 84 8% 88%;
+    --ring: 150 45% 21%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 160 15% 8%;             /* #0f1a14 deep forest */
+    --foreground: 84 10% 92%;             /* #E8EBE4 */
+    --card: 160 12% 12%;                  /* #172018 */
+    --card-foreground: 84 10% 92%;
+    --popover: 160 12% 12%;
+    --popover-foreground: 84 10% 92%;
+    --primary: 150 45% 40%;               /* brighter aloe green */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 150 45% 33%;
+    --secondary: 42 85% 52%;              /* honey gold stays */
+    --secondary-foreground: 0 0% 10%;
+    --secondary-hover: 42 85% 44%;
+    --muted: 160 10% 18%;
+    --muted-foreground: 84 8% 60%;
+    --accent: 160 10% 18%;
+    --accent-foreground: 150 45% 60%;
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 160 10% 22%;
+    --input: 160 10% 22%;
+    --ring: 150 45% 40%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground font-body;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5 { @apply font-heading; letter-spacing: -0.01em; }
+  ::selection { background: #1E4E37; color: #fff; }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .dark .glass {
+    background: rgba(15, 26, 20, 0.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .dark .card-soft {
+    @apply bg-card border-border/40;
+  }
+  .container-ff { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .overline { @apply text-xs tracking-[0.24em] uppercase font-semibold; }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3
+           font-semibold hover:bg-[hsl(var(--primary-hover))] transition-all duration-200 active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-secondary text-secondary-foreground px-6 py-3
+           font-semibold hover:bg-[hsl(var(--secondary-hover))] transition-all duration-200 active:scale-[0.98];
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-primary/30 text-primary px-6 py-3
+           font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-200;
+  }
+  .card-soft {
+    @apply bg-white border border-border/60 rounded-2xl transition-all duration-300
+           hover:shadow-[0_14px_48px_-12px_rgba(30,78,55,0.18)] hover:-translate-y-1;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium;
+  }
+  .grain {
+    background-image: radial-gradient(rgba(30, 78, 55, 0.05) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+}
+
+/* visual-edits debug helpers (kept from template) */
+@layer base {
+  [data-debug-wrapper="true"] { display: contents !important; }
+}
