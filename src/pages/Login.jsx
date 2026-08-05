@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { Leaf, Loader2 } from "lucide-react";
 import { formatApiErrorDetail } from "../lib/api";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import SEO from "../components/SEO";
 
 export default function Login() {
@@ -35,8 +34,11 @@ export default function Login() {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      await googleLogin(decoded.email, decoded.name, decoded.picture || "");
+      // Send the raw ID token to the backend and let it verify the token
+      // with Google. Never trust client-decoded JWT claims for auth - they
+      // aren't proof of anything since anyone can construct a similar-looking
+      // payload without the signed token.
+      await googleLogin(credentialResponse.credential);
       toast.success("Signed in with Google!");
       navigate(redirect, { replace: true });
     } catch (err) {
