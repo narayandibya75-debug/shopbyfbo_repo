@@ -1,14 +1,25 @@
 import axios from "axios";
+import { toast } from "sonner";
 
 const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || "https://shopbyfbo-repo.onrender.com";
+  process.env.REACT_APP_BACKEND_URL || "https://shopverse-1-la3b.onrender.com";
 
 export const API = `${BACKEND_URL}/api`;
+
+// Render's free tier spins the backend down after ~15 min of inactivity.
+// The next request has to "cold start" it back up, which commonly takes
+// 30-60s. A normal request timeout is far shorter than that, so the first
+// request after any idle period looks exactly like a dead server / CORS
+// failure in the browser (net::ERR_FAILED, no CORS header on the response,
+// because there IS no response yet). NORMAL_TIMEOUT keeps everyday requests
+// snappy; COLD_START_TIMEOUT is only used for the one-time retry below.
+const NORMAL_TIMEOUT = 15000;
+const COLD_START_TIMEOUT = 60000;
 
 export const api = axios.create({
   baseURL: API,
   withCredentials: true,
-  timeout: 15000,
+  timeout: NORMAL_TIMEOUT,
 });
 
 // Restore token on page refresh
@@ -17,14 +28,39 @@ if (token) {
   api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
-// Auto-clear token on 401
+let wakingToastShown = false;
+
+// Auto-clear token on 401, and retry once with a much longer timeout if the
+// request never got a response at all (timeout, or a connection-level
+// failure that surfaces as a CORS error with no Access-Control headers).
+// This does NOT retry on requests that got a real response (4xx/5xx) - only
+// on the "nothing came back" case, which is the cold-start signature.
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
       delete api.defaults.headers.common["Authorization"];
+      return Promise.reject(error);
     }
+
+    const config = error.config;
+    const looksLikeNoResponse =
+      !error.response && (error.code === "ECONNABORTED" || error.message === "Network Error");
+
+    if (config && looksLikeNoResponse && !config._coldStartRetry) {
+      config._coldStartRetry = true;
+      config.timeout = COLD_START_TIMEOUT;
+
+      if (!wakingToastShown) {
+        wakingToastShown = true;
+        toast.info("Waking up the server — this can take up to a minute after inactivity.");
+        setTimeout(() => { wakingToastShown = false; }, COLD_START_TIMEOUT);
+      }
+
+      return api(config);
+    }
+
     return Promise.reject(error);
   }
 );
