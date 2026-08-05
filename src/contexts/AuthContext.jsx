@@ -62,9 +62,13 @@ export function AuthProvider({ children }) {
     return data;
   };
 
-  // Google login — sends decoded profile to backend, gets JWT back
-  const googleLogin = async (email, name, picture) => {
-    const { data } = await api.post("/auth/google-login", { email, name, picture });
+  // Google login — sends the raw ID token (credential) to the backend, which
+  // verifies it with Google before trusting any claims from it, and returns
+  // our own JWT. Do NOT send client-decoded email/name/picture instead of
+  // the token: those are unverifiable claims and the backend will (correctly)
+  // reject a request that doesn't include the token itself.
+  const googleLogin = async (credential) => {
+    const { data } = await api.post("/auth/google-login", { credential });
     localStorage.setItem("token", data.access_token);
     api.defaults.headers.common["Authorization"] = `Bearer ${data.access_token}`;
     await refresh();
