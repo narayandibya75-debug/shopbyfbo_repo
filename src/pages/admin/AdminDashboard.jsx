@@ -27,14 +27,16 @@ export default function AdminDashboard() {
     fetchStats();
   }, []);
 
+  // /admin/stats returns a nested shape:
+  // { products: {total, active, out_of_stock, discontinued}, orders: {total, awaiting_verification}, revenue: {total, bv, cc}, users: {total} }
   const cards = stats ? [
-    { label: "Active products", value: stats.active_products, icon: Package, color: "text-green-700 bg-green-50" },
-    { label: "Out of stock", value: stats.out_of_stock, icon: AlertCircle, color: "text-yellow-700 bg-yellow-50" },
-    { label: "Discontinued", value: stats.discontinued, icon: XCircle, color: "text-stone-700 bg-stone-100" },
-    { label: "Total orders", value: stats.total_orders, icon: ShoppingCart, color: "text-blue-700 bg-blue-50" },
-    { label: "Awaiting verification", value: stats.awaiting_verification ?? 0, icon: AlertCircle, color: "text-yellow-700 bg-yellow-50" },
-    { label: "Revenue", value: INR(stats.total_revenue), icon: IndianRupee, color: "text-primary bg-primary/10" },
-    { label: "Total BV / CC", value: `${(stats.total_bv || 0).toFixed(2)} / ${(stats.total_cc || 0).toFixed(3)}`, icon: BarChart3, color: "text-secondary bg-secondary/10" },
+    { label: "Active products", value: stats.products?.active ?? 0, icon: Package, color: "text-green-700 bg-green-50" },
+    { label: "Out of stock", value: stats.products?.out_of_stock ?? 0, icon: AlertCircle, color: "text-yellow-700 bg-yellow-50" },
+    { label: "Discontinued", value: stats.products?.discontinued ?? 0, icon: XCircle, color: "text-stone-700 bg-stone-100" },
+    { label: "Total orders", value: stats.orders?.total ?? 0, icon: ShoppingCart, color: "text-blue-700 bg-blue-50" },
+    { label: "Awaiting verification", value: stats.orders?.awaiting_verification ?? 0, icon: AlertCircle, color: "text-yellow-700 bg-yellow-50" },
+    { label: "Revenue", value: INR(stats.revenue?.total), icon: IndianRupee, color: "text-primary bg-primary/10" },
+    { label: "Total BV / CC", value: `${(stats.revenue?.bv || 0).toFixed(2)} / ${(stats.revenue?.cc || 0).toFixed(3)}`, icon: BarChart3, color: "text-secondary bg-secondary/10" },
   ] : [];
 
   return (
