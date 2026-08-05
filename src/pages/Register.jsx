@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { Leaf, Loader2 } from "lucide-react";
 import { formatApiErrorDetail } from "../lib/api";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import SEO from "../components/SEO";
 
 export default function Register() {
@@ -35,8 +34,9 @@ export default function Register() {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      await googleLogin(decoded.email, decoded.name, decoded.picture || "");
+      // Send the raw ID token to the backend and let it verify the token
+      // with Google, rather than trusting client-decoded JWT claims.
+      await googleLogin(credentialResponse.credential);
       toast.success("Signed in with Google!");
       navigate("/", { replace: true });
     } catch (err) {
