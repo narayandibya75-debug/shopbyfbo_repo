@@ -44,6 +44,19 @@ export function AuthProvider({ children }) {
     refresh();
   }, [refresh]);
 
+  // api.js dispatches this when a background token refresh fails (refresh
+  // token itself expired/revoked) - i.e. the session is genuinely over, not
+  // just a single request that 401'd. Clear state here so ProtectedRoute /
+  // AdminRoute redirect to /login on their own; no direct navigate() needed.
+  useEffect(() => {
+    const handleLoggedOut = () => {
+      setUser(null);
+      setIsAdmin(false);
+    };
+    window.addEventListener("auth:logged-out", handleLoggedOut);
+    return () => window.removeEventListener("auth:logged-out", handleLoggedOut);
+  }, []);
+
   // Email / password login
   const login = async (email, password) => {
     const { data } = await api.post("/auth/login", { email, password });
