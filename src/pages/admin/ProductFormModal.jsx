@@ -51,6 +51,15 @@ export default function ProductFormModal({ product, onClose, onSaved }) {
   const setField = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const setNum = (k) => (e) => setForm({ ...form, [k]: Number(e.target.value) });
 
+  // Mirrors the backend's ProductBase Pydantic limits exactly. Keep these in
+  // sync with server.py if either side changes - see note in onSubmit.
+  const LIMITS = {
+    name: 200,
+    description: 2000,
+    category: 50,
+    sku: 50,
+  };
+
   const onUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -80,6 +89,30 @@ export default function ProductFormModal({ product, onClose, onSaved }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    // Debug aid: print the length of every string field before submitting,
+    // so it's immediately obvious which one is the problem if this ever
+    // happens again (e.g. after a paste from Word/Google Docs, which can
+    // silently carry far more characters than what's visibly selected).
+    const stringFields = ["name", "description", "category", "sku"];
+    console.log("[ProductFormModal] field lengths before submit:", {
+      ...Object.fromEntries(stringFields.map((k) => [k, form[k]?.length ?? 0])),
+    });
+
+    // Client-side mirror of the backend's max_length constraints. Catches
+    // the problem before a round trip, with the specific field named -
+    // instead of the raw "String should have at most 2000 characters"
+    // Pydantic message, which doesn't say which field it's talking about.
+    const tooLong = stringFields.find(
+      (k) => LIMITS[k] && (form[k]?.length ?? 0) > LIMITS[k]
+    );
+    if (tooLong) {
+      toast.error(
+        `"${tooLong}" is ${form[tooLong].length} characters — max is ${LIMITS[tooLong]}. Please shorten it by ${form[tooLong].length - LIMITS[tooLong]} characters.`
+      );
+      return;
+    }
+
     setSaving(true);
     try {
       const payload = {
@@ -164,7 +197,22 @@ export default function ProductFormModal({ product, onClose, onSaved }) {
               </select>
             </F>
             <F label="Description" className="sm:col-span-2">
-              <Textarea rows={3} value={form.description} onChange={setField("description")} data-testid="pf-description" />
+              <Textarea
+                rows={3}
+                maxLength={LIMITS.description}
+                value={form.description}
+                onChange={setField("description")}
+                data-testid="pf-description"
+              />
+              <p
+                className={`text-[11px] mt-1 text-right ${
+                  form.description.length > LIMITS.description * 0.9
+                    ? "text-amber-600"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {form.description.length} / {LIMITS.description}
+              </p>
             </F>
             <F label="Featured" className="sm:col-span-2">
               <label className="inline-flex items-center gap-2">
