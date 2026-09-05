@@ -801,7 +801,7 @@ export default function Home() {
 
             {/* Replace this URL with your actual Instagram profile */}
             <a
-              href="https://instagram.com/"
+              href="https://www.instagram.com/s303__k/"
               target="_blank"
               rel="noreferrer"
               className="mt-6 inline-flex items-center gap-2 btn-outline"
