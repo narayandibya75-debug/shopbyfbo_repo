@@ -440,125 +440,145 @@ export default function Chatbot() {
         {/* =====================================================
             WELCOME MESSAGE / GREETING
         ====================================================== */}
-        {!open && showGreeting && (
-          <div
-            className="
-              absolute
-              bottom-[72px]
-              right-0
-              w-[280px]
-              sm:w-[320px]
-              animate-in
-              fade-in
-              slide-in-from-bottom-3
-              duration-500
-            "
-          >
-            <div
-              className="
-                relative
-                rounded-2xl
-                border border-border
-                bg-background
-                p-4
-                shadow-xl
-              "
-            >
-              {/* Close greeting */}
-              <button
-                type="button"
-                onClick={() => setShowGreeting(false)}
-                className="
-                  absolute
-                  right-2
-                  top-2
-                  grid
-                  h-6
-                  w-6
-                  place-items-center
-                  rounded-full
-                  text-muted-foreground
-                  hover:bg-muted
-                "
-                aria-label="Close welcome message"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
+{!open && showGreeting && (
+  <div
+    className="
+      absolute bottom-[76px] right-0
+      w-[290px] sm:w-[330px]
+      animate-in fade-in slide-in-from-bottom-3
+      duration-500
+    "
+  >
+    <div
+      className="
+        relative overflow-hidden
+        rounded-2xl
+        border border-border
+        bg-background
+        p-4
+        shadow-2xl
+      "
+    >
+      {/* Close button */}
+      <button
+        type="button"
+        onClick={() => setShowGreeting(false)}
+        className="
+          absolute right-2 top-2
+          grid h-7 w-7 place-items-center
+          rounded-full
+          text-muted-foreground
+          transition
+          hover:bg-muted
+        "
+        aria-label="Close welcome message"
+      >
+        <X className="h-3.5 w-3.5" />
+      </button>
 
-              <div className="flex gap-3 pr-4">
-                {/* Bot icon */}
-                <div
-                  className="
-                    flex h-11 w-11
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-full
-                    bg-primary
-                    text-primary-foreground
-                    shadow-md
-                  "
-                >
-                  <Sparkles className="h-5 w-5" />
-                </div>
+      <div className="flex items-start gap-3 pr-5">
+        {/* Assistant avatar */}
+        <div
+          className="
+            flex h-11 w-11 shrink-0
+            items-center justify-center
+            rounded-full
+            bg-primary
+            text-primary-foreground
+            shadow-md
+          "
+        >
+          <Sparkles className="h-5 w-5" />
+        </div>
 
-                <div>
-                  <div className="text-sm font-semibold text-foreground">
-                    Hi! 👋
-                  </div>
-
-                  <div className="mt-0.5 text-sm font-semibold text-foreground">
-                    I'm your ShopVerse Assistant
-                  </div>
-
-                  <div className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                    How can I help you today?
-                    I can help you find products,
-                    check prices, orders and delivery.
-                  </div>
-                </div>
-              </div>
-
-              {/* Open chat */}
-              <button
-                type="button"
-                onClick={openChat}
-                className="
-                  mt-3
-                  w-full
-                  rounded-xl
-                  bg-primary
-                  px-3
-                  py-2
-                  text-xs
-                  font-medium
-                  text-primary-foreground
-                  transition
-                  hover:opacity-90
-                "
-              >
-                Chat with ShopVerse Assistant
-              </button>
-
-              {/* Bubble pointer */}
-              <div
-                className="
-                  absolute
-                  -bottom-2
-                  right-7
-                  h-4
-                  w-4
-                  rotate-45
-                  border-b
-                  border-r
-                  border-border
-                  bg-background
-                "
-              />
-            </div>
+        <div className="min-w-0">
+          <div className="text-sm font-bold text-foreground">
+            Hi! 👋
           </div>
-        )}
 
+          <div className="mt-0.5 text-sm font-semibold text-foreground">
+            I'm your ShopVerse Assistant
+          </div>
+
+          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+            Looking for a product? I can help you find products,
+            check prices, delivery, availability, or track your order.
+          </p>
+        </div>
+      </div>
+
+      {/* Suggested actions */}
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={() => sendMessage("Show me your products")}
+          className="
+            rounded-xl
+            border border-border
+            bg-muted/40
+            px-2.5 py-2
+            text-xs font-medium
+            transition
+            hover:bg-muted
+          "
+        >
+          🛍️ Find Products
+        </button>
+
+        <button
+          type="button"
+          onClick={() => sendMessage("Help me choose a product")}
+          className="
+            rounded-xl
+            border border-border
+            bg-muted/40
+            px-2.5 py-2
+            text-xs font-medium
+            transition
+            hover:bg-muted
+          "
+        >
+          ✨ Help Me Choose
+        </button>
+      </div>
+
+      {/* Main CTA */}
+      <button
+        type="button"
+        onClick={openChat}
+        className="
+          mt-2.5
+          flex w-full
+          items-center justify-center gap-2
+          rounded-xl
+          bg-primary
+          px-3 py-2.5
+          text-xs font-semibold
+          text-primary-foreground
+          shadow-sm
+          transition
+          hover:opacity-90
+        "
+      >
+        <MessageCircle className="h-4 w-4" />
+        Chat with ShopVerse Assistant
+      </button>
+
+      {/* Speech bubble pointer */}
+      <div
+        className="
+          absolute
+          -bottom-2 right-7
+          h-4 w-4
+          rotate-45
+          border-b border-r
+          border-border
+          bg-background
+        "
+      />
+    </div>
+  </div>
+)}
         {/* =====================================================
             CHATBOT LAUNCHER
         ====================================================== */}
