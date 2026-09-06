@@ -41,13 +41,6 @@ export default function Chatbot() {
    * It automatically disappears after 8 seconds,
    * but the chatbot button remains available.
    */
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowGreeting(false);
-    }, 8000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   /*
    * When chatbot opens, hide the greeting bubble.
@@ -186,18 +179,20 @@ export default function Chatbot() {
               </div>
 
               <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="
-                  grid h-9 w-9
-                  place-items-center
-                  rounded-full
-                  hover:bg-white/10
-                "
-                aria-label="Close chat"
-              >
-                <X className="h-5 w-5" />
-              </button>
+  type="button"
+  onClick={() => setShowGreeting(false)}
+  className="
+    absolute right-2 top-2
+    grid h-7 w-7 place-items-center
+    rounded-full
+    text-muted-foreground
+    transition
+    hover:bg-muted
+  "
+  aria-label="Close welcome message"
+>
+  <X className="h-3.5 w-3.5" />
+</button>
             </div>
 
             {/* Messages */}
